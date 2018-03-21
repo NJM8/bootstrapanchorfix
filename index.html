@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>bootstrapanchorfix</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+<body>
+  <div class="container d-flex flex-column align-items-center">
+    <a class="m-3 link" href="https://www.google.com" target="_blank" rel="noopener">No focus styling applied by default</a>
+    <a class="btn btn-info m-3 link" href="https://www.google.com" target="_blank" rel="noopener">Focus styling, won't be removed when you come back</a>
+    <a class="btn btn-info m-3 link" data-toggle="tooltip" title="Oh hi" href="https://www.google.com" target="_blank" rel="noopener">Tooltips will stay open as well</a>
+    <a class="m-3 link" data-toggle="tooltip" title="Ok bye" href="https://www.google.com" target="_blank" rel="noopener">No focus styling applied by default, tooltip still won't go away</a>
+    <button class="btn btn-primary m-3" id="fixIt">Click me to fix the focus styling</button>
+    <button class="btn btn-danger m-3" id="unFixIt">Click me to unfix the focus styling</button>
+    <p id="status">Status: broken</p>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  <script>
+    $(document).ready(function(){
+      $('[data-toggle="tooltip"]').tooltip();
+
+      function addListenersToFixFocus(){
+        console.log('added');
+
+        $(".link").on("click", function () {
+          $(this).blur();
+          $(this).hideFocus = true;
+          $(this).css('outline: none');
+        });
+
+        $('#status').text('Status: fixed');
+      }
+      function removeListenersToFixFocus(){
+        console.log('removed');
+
+        $(".link").off("click");
+
+        $('#status').text('Status: broken');
+      }
+      
+      $('#fixIt').on('click', () => addListenersToFixFocus());
+      $('#unFixIt').on('click', () => removeListenersToFixFocus());
+    });
+  </script>
+</body>
+</html>
